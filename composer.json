@@ -1,0 +1,32 @@
+{
+  "name": "akeinhell/telegram-bot",
+  "authors": [
+    {
+      "name": "Aleksey Dorokhov",
+      "email": "akeinhell@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.9",
+    "guzzlehttp/guzzle": "^6.2"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^4.8|^5.0",
+    "phpspec/prophecy": "^1.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Telegram\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Telegram\\Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
