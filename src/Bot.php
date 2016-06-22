@@ -11,5 +11,13 @@ namespace Telegram;
 
 class Bot
 {
+    public function __construct()
+    {
+    }
+
+    public static function __callStatic($name, $arguments)
+    {
+    }
+
 
 }
