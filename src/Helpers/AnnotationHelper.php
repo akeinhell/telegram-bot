@@ -8,15 +8,9 @@
 
 namespace Telegram\Helpers;
 
-use Jasny;
-
 
 class AnnotationHelper
 {
-    private static $map = [
-        'required' => 'boolean',
-        'type'     => 'string',
-    ];
 
     public static function getAnnotations($class, $value)
     {
@@ -29,10 +23,6 @@ class AnnotationHelper
         $return      = [];
         foreach ($annotations as $annotation) {
             list($k, $v) = array_pad(explode(' ', $annotation, 2), 2, null);
-            if (array_key_exists($k, static::$map)) {
-                $type = static::$map[$k];
-                $v    = Jasny\TypeCast::value($v)->to($type);
-            }
 
             $return[$k] = $v;
         }
