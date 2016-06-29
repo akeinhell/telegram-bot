@@ -14,8 +14,6 @@ use Telegram\Base\BaseType;
 class Update extends BaseType
 {
     /**
-     * @required false
-     * @description id of update
      * @var integer
      */
     protected $updateId;
@@ -24,4 +22,24 @@ class Update extends BaseType
      * @var Message
      */
     protected $message;
+
+    /**
+     * @var Message
+     */
+    protected $editedMessage;
+
+    /**
+     * @var InlineQuery
+     */
+    protected $inlineQuery;
+
+    /**
+     * @var ChosenInlineResult
+     */
+    protected $chosenInlineResult;
+
+    /**
+     * @var CallbackQuery
+     */
+    protected $callbackQuery;
 }

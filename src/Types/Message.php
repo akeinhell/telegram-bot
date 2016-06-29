@@ -11,7 +11,36 @@ namespace Telegram\Types;
 
 use Telegram\Base\BaseType;
 
+/**
+ *
+ * 
+ * Class Message
+ * @package Telegram\Types
+ */
 class Message extends BaseType
 {
+    /**
+     * @var
+     */
+    protected $messageId;
 
+    /**
+     * @var User
+     */
+    protected $from;
+
+    /**
+     * @var Chat
+     */
+    protected $chat;
+
+    /**
+     * @var int
+     */
+    protected $date;
+
+    /**
+     * @var string
+     */
+    protected $text;
 }

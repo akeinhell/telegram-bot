@@ -11,6 +11,11 @@ namespace Telegram\Base;
 
 use Telegram\Helpers\AnnotationHelper;
 
+/**
+ * https://core.telegram.org/bots/api#available-types
+ * Class BaseType
+ * @package Telegram\Base
+ */
 class BaseType
 {
     /**
@@ -23,18 +28,21 @@ class BaseType
             return $data;
         }
         foreach ($data as $key => $value) {
+            $key          = $this->toCamelCase($key);
             $annotatinons = AnnotationHelper::getAnnotations($this, $key);
-            if (!property_exists($this, $key)) {
-                $this->$key = $value;
-                continue;
-            }
 
-            if (array_key_exists('var', $annotatinons)) {
+            if ($annotatinons && array_key_exists('var', $annotatinons)) {
                 $class = '\\Telegram\\Types\\' . $annotatinons['var'];
                 if (class_exists($class)) {
                     /** @var BaseType $class */
                     $this->$key = $class::create($value);
+                    continue;
                 }
+            }
+
+            if (!property_exists($this, $key)) {
+                $this->$key = $value;
+                continue;
             }
         }
     }
@@ -55,5 +63,17 @@ class BaseType
     public static function createFromJson($json)
     {
         return new static(json_decode($json, true));
+    }
+
+    /**
+     * @param $key
+     * @return string
+     */
+    private function toCamelCase($key)
+    {
+        return lcfirst(implode(array_map(function ($part) {
+            return ucfirst($part);
+        }, explode('_', $key))));
+
     }
 }
