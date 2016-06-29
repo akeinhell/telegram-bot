@@ -1,0 +1,7 @@
+[push]
+	default = simple
+[gitflow "prefix"]
+    feature = feature-
+    release = release-
+    hotfix = hotfix-
+    support = support-
