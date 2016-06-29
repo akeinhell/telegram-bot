@@ -11,7 +11,7 @@ namespace Telegram\Helpers;
 
 class AnnotationHelper
 {
-
+    
     public static function getAnnotations($class, $value)
     {
         $propertyReflect = new \ReflectionProperty($class, $value);
@@ -23,7 +23,6 @@ class AnnotationHelper
         $return      = [];
         foreach ($annotations as $annotation) {
             list($k, $v) = array_pad(explode(' ', $annotation, 2), 2, null);
-
             $return[$k] = $v;
         }
 
