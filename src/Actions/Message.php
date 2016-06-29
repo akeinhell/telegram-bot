@@ -13,4 +13,8 @@ use Telegram\Base\BaseAction;
 class Message implements BaseAction
 {
 
+    public function send()
+    {
+        return true;
+    }
 }

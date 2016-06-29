@@ -11,5 +11,5 @@ namespace Telegram\Base;
 
 interface BaseAction
 {
-
+    public function send();
 }

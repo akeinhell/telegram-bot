@@ -10,7 +10,7 @@ use Telegram\Types\Update;
 class BotTest extends PHPUnit_Framework_TestCase
 {
     public function testBase(){
-        $update = Update::create([
+        Update::create([
             'update_id' => 123456,
             'message' => [
                 'message_id' => 13948,
@@ -31,6 +31,18 @@ class BotTest extends PHPUnit_Framework_TestCase
                 'text' => 'testText',
             ],
         ]);
-        var_dump($update);
+    }
+
+    /**
+     * @expectedException \Telegram\Exceptions\TelegramCoreException
+     */
+    public function testNullTokenBot()
+    {
+        $bot = new \Telegram\Bot();
+    }
+
+    public function testSend()
+    {
+        \Telegram\Bot::message()->send();
     }
 }
