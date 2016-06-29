@@ -1,4 +1,5 @@
 <?php
+use Telegram\Types\Update;
 
 /**
  * Created by PhpStorm.
@@ -9,6 +10,10 @@
 class BotTest extends PHPUnit_Framework_TestCase
 {
     public function testBase(){
-
+        $update = Update::create([
+            'updateId'=>1,
+            'message'=>[]
+        ]);
+        var_dump($update);
     }
 }
