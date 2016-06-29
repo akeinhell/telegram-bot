@@ -8,11 +8,13 @@
 
 namespace Telegram\Types;
 
+use Telegram\Base\BaseType;
+
 /**
  * Class PhotoSize
  * @package Telegram\Types
  */
-class PhotoSize
+class PhotoSize extends BaseType
 {
     /**
      * @var string
