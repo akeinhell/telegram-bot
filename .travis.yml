@@ -20,6 +20,7 @@ before_script:
 script:
   - vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml
 
-after_script:
-  - if [ "$TRAVIS_PHP_VERSION" == "5.5" ] || [ "$TRAVIS_PHP_VERSION" == "5.6" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-  - if [ "$TRAVIS_PHP_VERSION" == "5.5" ] || [ "$TRAVIS_PHP_VERSION" == "5.6" ]; then php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml; fi
+after_success:
+  - php vendor/bin/coveralls -v;
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --access-token="xjSPxZCm8blcF0PE0gx82AO0JVONtgJ2f" --format=php-clover build/logs/clover.xml
