@@ -8,6 +8,9 @@ php:
 
 sudo: false
 
+install:
+  - composer require satooshi/php-coveralls
+
 matrix:
   fast_finish: true
   allow_failures:
@@ -21,6 +24,6 @@ script:
   - vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml
 
 after_success:
+
+after_success:
   - php vendor/bin/coveralls -v;
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --access-token="xjSPxZCm8blcF0PE0gx82AO0JVONtgJ2f" --format=php-clover build/logs/clover.xml
