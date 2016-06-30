@@ -10,7 +10,7 @@ namespace Telegram\Actions;
 
 use Telegram\Base\BaseAction;
 
-class Message implements BaseAction
+class Message implements Base
 {
 
     public function send()

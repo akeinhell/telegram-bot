@@ -40,11 +40,23 @@ class BaseType
                 }
             }
 
-            if (!property_exists($this, $key)) {
+            if (property_exists($this, $key)) {
                 $this->$key = $value;
                 continue;
             }
         }
+    }
+
+    /**
+     * @param $key
+     * @return string
+     */
+    private function toCamelCase($key)
+    {
+        return lcfirst(implode(array_map(function ($part) {
+            return ucfirst($part);
+        }, explode('_', $key))));
+
     }
 
     /**
@@ -63,17 +75,5 @@ class BaseType
     public static function createFromJson($json)
     {
         return new static(json_decode($json, true));
-    }
-
-    /**
-     * @param $key
-     * @return string
-     */
-    private function toCamelCase($key)
-    {
-        return lcfirst(implode(array_map(function ($part) {
-            return ucfirst($part);
-        }, explode('_', $key))));
-
     }
 }

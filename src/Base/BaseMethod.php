@@ -9,10 +9,7 @@
 namespace Telegram\Base;
 
 
-class BaseMethod
+abstract class BaseMethod
 {
-    public function Send()
-    {
-        
-    }
+    
 }
