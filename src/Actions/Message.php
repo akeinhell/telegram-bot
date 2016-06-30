@@ -8,9 +8,9 @@
 
 namespace Telegram\Actions;
 
-use Telegram\Base\BaseAction;
+use Telegram\Base\BaseMethod;
 
-class Message implements Base
+class Message extends BaseMethod
 {
 
     public function send()
