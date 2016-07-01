@@ -3,11 +3,9 @@
  * Created by PhpStorm.
  * User: akeinhell
  * Date: 29.06.16
- * Time: 17:33
+ * Time: 17:33.
  */
-
 namespace Telegram\Types;
-
 
 use Telegram\Base\BaseType;
 
@@ -19,12 +17,12 @@ class KeyboardButton extends BaseType
     protected $text;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $requestContact;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $requestLocation;
 }

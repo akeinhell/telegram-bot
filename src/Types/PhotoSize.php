@@ -3,16 +3,14 @@
  * Created by PhpStorm.
  * User: akeinhell
  * Date: 29.06.16
- * Time: 16:45
+ * Time: 16:45.
  */
-
 namespace Telegram\Types;
 
 use Telegram\Base\BaseType;
 
 /**
- * Class PhotoSize
- * @package Telegram\Types
+ * Class PhotoSize.
  */
 class PhotoSize extends BaseType
 {

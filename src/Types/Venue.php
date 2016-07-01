@@ -3,11 +3,9 @@
  * Created by PhpStorm.
  * User: akeinhell
  * Date: 29.06.16
- * Time: 17:29
+ * Time: 17:29.
  */
-
 namespace Telegram\Types;
-
 
 use Telegram\Base\BaseType;
 

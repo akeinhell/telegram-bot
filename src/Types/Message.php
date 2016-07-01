@@ -3,19 +3,14 @@
  * Created by PhpStorm.
  * User: akeinhell
  * Date: 29.06.16
- * Time: 14:15
+ * Time: 14:15.
  */
-
 namespace Telegram\Types;
-
 
 use Telegram\Base\BaseType;
 
 /**
- *
- * 
- * Class Message
- * @package Telegram\Types
+ * Class Message.
  */
 class Message extends BaseType
 {
@@ -145,22 +140,22 @@ class Message extends BaseType
     protected $newChatPhoto;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $deleteChatPhoto;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $groupChatCreated;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $superGroupChatCreated;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $channelChatCreated;
 
@@ -178,6 +173,4 @@ class Message extends BaseType
      * @var Message
      */
     protected $pinnedMessage;
-
-
 }

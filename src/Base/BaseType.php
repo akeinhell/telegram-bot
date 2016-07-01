@@ -3,23 +3,21 @@
  * Created by PhpStorm.
  * User: akeinhell
  * Date: 27.06.16
- * Time: 11:58
+ * Time: 11:58.
  */
-
 namespace Telegram\Base;
-
 
 use Telegram\Helpers\AnnotationHelper;
 
 /**
  * https://core.telegram.org/bots/api#available-types
- * Class BaseType
- * @package Telegram\Base
+ * Class BaseType.
  */
 class BaseType
 {
     /**
      * BaseType constructor.
+     *
      * @param array $data
      */
     public function __construct($data)
@@ -28,13 +26,13 @@ class BaseType
             return $data;
         }
         foreach ($data as $key => $value) {
-            $key          = $this->toCamelCase($key);
+            $key = $this->toCamelCase($key);
             $annotatinons = AnnotationHelper::getAnnotations($this, $key);
 
             if ($annotatinons && array_key_exists('var', $annotatinons)) {
-                $class = '\\Telegram\\Types\\' . $annotatinons['var'];
+                $class = '\\Telegram\\Types\\'.$annotatinons['var'];
                 if (class_exists($class)) {
-                    /** @var BaseType $class */
+                    /* @var BaseType $class */
                     $this->$key = $class::create($value);
                     continue;
                 }
@@ -49,6 +47,7 @@ class BaseType
 
     /**
      * @param $key
+     *
      * @return string
      */
     private function toCamelCase($key)
@@ -56,11 +55,11 @@ class BaseType
         return lcfirst(implode(array_map(function ($part) {
             return ucfirst($part);
         }, explode('_', $key))));
-
     }
 
     /**
      * @param $data
+     *
      * @return static
      */
     public static function create($data)
@@ -70,6 +69,7 @@ class BaseType
 
     /**
      * @param $json
+     *
      * @return static
      */
     public static function createFromJson($json)
