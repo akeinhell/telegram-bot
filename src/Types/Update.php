@@ -3,18 +3,16 @@
  * Created by PhpStorm.
  * User: akeinhell
  * Date: 29.06.16
- * Time: 12:42
+ * Time: 12:42.
  */
-
 namespace Telegram\Types;
-
 
 use Telegram\Base\BaseType;
 
 class Update extends BaseType
 {
     /**
-     * @var integer
+     * @var int
      */
     protected $updateId;
 

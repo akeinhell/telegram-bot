@@ -3,11 +3,9 @@
  * Created by PhpStorm.
  * User: akeinhell
  * Date: 30.06.16
- * Time: 15:14
+ * Time: 15:14.
  */
-
 namespace Telegram\Methods;
-
 
 use Telegram\Base\BaseMethod;
 use Telegram\Bot;
@@ -21,6 +19,7 @@ class GetMe extends BaseMethod
 
     /**
      * GetMe constructor.
+     *
      * @param $botInstance
      */
     public function __construct(&$botInstance)
