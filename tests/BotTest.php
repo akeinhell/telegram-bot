@@ -38,12 +38,20 @@ class BotTest extends PHPUnit_Framework_TestCase
      */
     public function testNullTokenBot()
     {
-        $bot = new \Telegram\Bot();
+        new \Telegram\Bot();
     }
 
-    public function testSend()
+    public function testAbout()
+    {
+        $bot     = new \Telegram\Bot('101766553:AAFHtQFAMl0-bUtm5zun4CaHTu71Ymy1R50');
+        $botInfo = $bot->getMe();
+        $this->assertNotNull($botInfo);
+        $this->assertEquals(get_class($botInfo), \Telegram\Types\User::class);
+    }
+
+    public function testState()
     {
         $bot = new \Telegram\Bot('101766553:AAFHtQFAMl0-bUtm5zun4CaHTu71Ymy1R50');
-        var_dump($bot->getMe());
+        $bot->getState();
     }
 }

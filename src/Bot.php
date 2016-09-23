@@ -11,6 +11,7 @@ namespace Telegram;
 
 use GuzzleHttp\Client;
 use Telegram\Actions\Message;
+use Telegram\Config\BaseConfig;
 use Telegram\Exceptions\TelegramCoreException;
 use Telegram\Methods\GetMe;
 use Telegram\Types\User;
@@ -21,6 +22,15 @@ use Telegram\Types\User;
  */
 class Bot
 {
+    /**
+     * @var mixed
+     */
+    private $state;
+    /**
+     * @var BaseConfig
+     */
+    private $config;
+
     /**
      * Bot constructor.
      * @param null|string $token
@@ -39,11 +49,22 @@ class Bot
         $this->client = new Client(array_merge($baseOptions, $options));
     }
 
+    /**
+     * @return mixed
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
     public function message()
     {
         return new Message();
     }
 
+    /**
+     * @return User
+     */
     public function getMe()
     {
         $method = new GetMe($this);
@@ -55,11 +76,12 @@ class Bot
     {
         $response = $this->client->post($method, ['body_params' => $params])->getBody()->__toString();
         $data     = json_decode($response, true);
-        var_dump($data['result']);
 
         return new User($data['result']);
-
     }
 
-
+    public function setConfig(BaseConfig $config)
+    {
+        $this->config = $config;
+    }
 }
