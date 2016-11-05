@@ -13,74 +13,32 @@ use Carbon\Carbon;
 use Telegram\Base\BaseType;
 
 /**
- *
- *
  * Class Message
+ * @method int getUpdateId
+ * @method User getFrom
+ * @method Carbon getDate
+ * @method string getText
+ * @method User getForwardFrom
+ * @method Chat getForwardFromChat
+ * @method Carbon getForwardDate
+ * @method Carbon getEditDate
+ * @method Message getReplyToMessage
+ *
  * @package Telegram\Types
  */
 class Message extends BaseType
 {
     protected $map = [
-        'from' => User::class,
-        'chat' => Chat::class,
-        'date' => [Carbon::class, 'createFromTimestamp']
+        'from'        => User::class,
+        'chat'        => Chat::class,
+        'date'        => [Carbon::class, 'createFromTimestamp'],
+        'forwardDate' => [Carbon::class, 'createFromTimestamp'],
     ];
 
     public function __construct($attributes)
     {
         parent::__construct($attributes);
     }
-
-
-//    /**
-//     * @var
-//     */
-//    protected $messageId;
-//
-//    /**
-//     * @var User
-//     */
-//    protected $from;
-//
-//    /**
-//     * @var Chat
-//     */
-//    protected $chat;
-//
-//    /**
-//     * @var int
-//     */
-//    protected $date;
-//
-//    /**
-//     * @var string
-//     */
-//    protected $text;
-//
-//    /**
-//     * @var User
-//     */
-//    protected $forwardFrom;
-//
-//    /**
-//     * @var Chat
-//     */
-//    protected $forwardFromChat;
-//
-//    /**
-//     * @var int
-//     */
-//    protected $forwardDate;
-//
-//    /**
-//     * @var Message
-//     */
-//    protected $replyToMessage;
-//
-//    /**
-//     * @var int
-//     */
-//    protected $editDate;
 //
 //    /**
 //     * @var MessageEntity[]

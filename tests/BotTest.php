@@ -9,28 +9,32 @@ use Telegram\Types\Update;
  */
 class BotTest extends PHPUnit_Framework_TestCase
 {
-    public function testBase(){
-        Update::create([
-            'update_id' => 123456,
-            'message' => [
-                'message_id' => 13948,
-                'from' => [
-                    'id' => 123,
-                    'first_name' => 'Ilya',
-                    'last_name' => 'Gusev',
-                    'username' => 'iGusev',
+    private static $updateData;
+
+    public function setUp()
+    {
+        $faker            = Faker\Factory::create('ru_RU');
+        self::$updateData = [
+            'update_id' => $faker->randomNumber,
+            'message'   => [
+                'message_id' => $faker->randomNumber,
+                'from'       => [
+                    'id'         => $faker->randomNumber,
+                    'first_name' => $faker->firstName,
+                    'last_name'  => $faker->lastName,
+                    'username'   => $faker->name,
                 ],
-                'chat' => [
-                    'id' => 123,
-                    'type' => 'private',
-                    'first_name' => 'Ilya',
-                    'last_name' => 'Gusev',
-                    'username' => 'iGusev',
+                'chat'       => [
+                    'id'         => $faker->randomNumber,
+                    'type'       => $faker->randomElement(['private', 'group', 'supergroup']),
+                    'first_name' => $faker->firstName,
+                    'last_name'  => $faker->lastName,
+                    'username'   => $faker->name,
                 ],
-                'date' => 1440169809,
-                'text' => 'testText',
+                'date'       => $faker->dateTime->getTimestamp(),
+                'text'       => $faker->text,
             ],
-        ]);
+        ];
     }
 
     /**
@@ -58,31 +62,30 @@ class BotTest extends PHPUnit_Framework_TestCase
         $bot->getState();
     }
 
-    public function testUpdate(){
-        $this->assertTrue(is_callable([\Carbon\Carbon::class, 'createFromTimestamp']));
-        $update = Update::create([
-            'update_id' => 123456,
-            'message' => [
-                'message_id' => 13948,
-                'from' => [
-                    'id' => 123,
-                    'first_name' => 'Ilya',
-                    'last_name' => 'Gusev',
-                    'username' => 'iGusev',
-                ],
-                'chat' => [
-                    'id' => 123,
-                    'type' => 'private',
-                    'first_name' => 'Ilya',
-                    'last_name' => 'Gusev',
-                    'username' => 'iGusev',
-                ],
-                'date' => 1440169809,
-                'text' => 'testText',
-            ],
-        ]);
+    public function testUpdate()
+    {
+        $update = Update::create(self::$updateData);
 
         $this->assertNotNull($update->get('message'));
-        dump($update->toArray());
+        $this->assertNotNull($update->get('update_id'));
+        $this->assertArrayHasKey('update_id', $update->toArray());
+        $this->assertArrayHasKey('message', $update->toArray());
+
+        $this->assertNotFalse(json_decode($update->toJson()));
+    }
+
+    public function testGetter()
+    {
+        $update = Update::create(self::$updateData);
+
+        $this->assertEquals(array_get(self::$updateData, 'update_id'), $update->getUpdateId());
+        $this->assertEquals(get_class($update->getMessage()), \Telegram\Types\Message::class);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testFailArgument(){
+        Update::create([])->getFailArgument();
     }
 }

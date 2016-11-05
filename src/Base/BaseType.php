@@ -101,4 +101,14 @@ class BaseType
     {
         return json_encode($this->toArray());
     }
+
+    public function __call($name, $arguments)
+    {
+        $prefix   = substr($name, 0, 3);
+        $property = snake_case(substr($name, 3));
+        if ($prefix === 'get' && $this->attributes->has($property)) {
+            return $this->get($property);
+        }
+        throw new \InvalidArgumentException();
+    }
 }
