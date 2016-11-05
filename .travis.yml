@@ -4,7 +4,6 @@ php:
   - 5.5
   - 5.6
   - 7.0
-  - hhvm
 
 sudo: false
 
@@ -29,3 +28,4 @@ after_success:
   - phpunit --coverage-clover=coverage.clover
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --access-token="74c5df6993414b945a394c9304cce0ace56592b6fb5bad1d10c646ee293015e7" --format=php-clover coverage.clover
+  - bash <(curl -s https://codecov.io/bash)

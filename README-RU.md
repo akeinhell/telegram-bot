@@ -1,5 +1,5 @@
-**IN DEVELOP**
-**NOT USE IN PRODUCTION**
+**БИБЛИОТЕКА В РАЗРАБОТКЕ**
+**ЧАСТЬ ФУНКЦИОНАЛА НЕ РЕАЛИЗОВаНА ИЛИ НЕ ПРОТЕСТИРОВАНА**
 
 # PHP Telegram Bot Api
 
@@ -11,41 +11,40 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/akeinhell/telegram-bot.svg?style=flat-square)](https://packagist.org/packages/akeinhell/telegram-bot)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/5dba33e1-c7a1-4f28-949f-a00332326363/small.png)](https://insight.sensiolabs.com/projects/5dba33e1-c7a1-4f28-949f-a00332326363)
 
+Библиотека предоставляет полный доступ к [Telegram Bot API](https://core.telegram.org/bots/api). Реализованы все доступные методы и все возможные варианты ответов 
 
-An extended native php wrapper for [Telegram Bot API](https://core.telegram.org/bots/api) without requirements. Supports all methods and types of responses.
-
-## Bots: An introduction for developers
->Bots are special Telegram accounts designed to handle messages automatically. Users can interact with bots by sending them command messages in private or group chats.
+## Информация для разработчиков
+> Боты это специальные аккаунты телеграма которые обрабатыввают сообщения автоматически, Пользователи могут взаимодействовать с ботами посредством отправки им специальных комманд в личных или груповых чатах
 
 >You control your bots using HTTPS requests to [bot API](https://core.telegram.org/bots/api).
 
 >The Bot API is an HTTP-based interface created for developers keen on building bots for Telegram.
 To learn how to create and set up a bot, please consult [Introduction to Bots](https://core.telegram.org/bots) and [Bot FAQ](https://core.telegram.org/bots/faq).
 
-## Install
+## Установка
 
-Via Composer
+Через Composer
 
 ``` bash
 composer require akeinhell/telegram-bot
 ```
 
 
-## Change log
+## Список изменений
 
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+В  файле [CHANGELOG](CHANGELOG.md) отображена вся информация по изменениям.
 
-## Testing
+## Тестирование
 
 ``` bash
 $ composer test
-```
+```1
 
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-## Security
+## Безопасность
 
 If you discover any security related issues, please email akeinhell@gmail.com instead of using the issue tracker.
 

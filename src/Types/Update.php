@@ -11,35 +11,22 @@ namespace Telegram\Types;
 
 use Telegram\Base\BaseType;
 
+/**
+ * Class Update
+ * @method int getUpdateId
+ * @method Message getMessage
+ * @method Message getEditedMessage
+ * @method InlineQuery getInlineQuery
+ * @method ChosenInlineResult getChosenInlineResult
+ * @method CallbackQuery getCallbackQuery
+ *
+ * @package Telegram\Types
+ *
+ */
 class Update extends BaseType
 {
-    /**
-     * @var integer
-     */
-    protected $updateId;
-
-    /**
-     * @var Message
-     */
-    protected $message;
-
-    /**
-     * @var Message
-     */
-    protected $editedMessage;
-
-    /**
-     * @var InlineQuery
-     */
-    protected $inlineQuery;
-
-    /**
-     * @var ChosenInlineResult
-     */
-    protected $chosenInlineResult;
-
-    /**
-     * @var CallbackQuery
-     */
-    protected $callbackQuery;
+    protected $map = [
+        'message'       => Message::class,
+        'editedMessage' => Message::class,
+    ];
 }

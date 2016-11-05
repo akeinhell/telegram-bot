@@ -9,6 +9,7 @@
 namespace Telegram\Base;
 
 
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 /**
@@ -49,21 +50,65 @@ class BaseType
 
         return collect($attributes)
             ->mapWithKeys(function ($item, $key) use ($map) {
-                if (is_array($item) && $className = array_get($map, $key)) {
-                    return new $className($item);
+                $keyData = array_get($map, $key);
+                if (is_callable($keyData)) {
+                    return [$key => call_user_func($keyData, $item)];
                 }
 
-                return $item;
+                if (class_exists($keyData)) {
+                    return [$key => new $keyData($item)];
+                }
+
+                return [$key => $item];
             });
     }
 
     /**
-     * @param $json
+     * @param array|string $json
      *
      * @return static
      */
     public static function create($json)
     {
         return new static(is_array($json) ? $json : json_decode($json, true));
+    }
+
+    public function get($key)
+    {
+        return $this->attributes->get($key);
+    }
+
+    public function toArray()
+    {
+        return $this->attributes
+            ->mapWithKeys(function ($item, $key) {
+                if (is_subclass_of($item, BaseType::class)) {
+                    /** @var BaseType $item */
+                    return [$key => $item->toArray()];
+                }
+
+                if (is_object($item) && (get_class($item) === Carbon::class)) {
+                    /** @var $item Carbon */
+                    return [$key => $item->timestamp];
+                }
+
+                return [$key => $item];
+            })
+            ->toArray();
+    }
+
+    public function toJson()
+    {
+        return json_encode($this->toArray());
+    }
+
+    public function __call($name, $arguments)
+    {
+        $prefix   = substr($name, 0, 3);
+        $property = snake_case(substr($name, 3));
+        if ($prefix === 'get' && $this->attributes->has($property)) {
+            return $this->get($property);
+        }
+        throw new \InvalidArgumentException();
     }
 }

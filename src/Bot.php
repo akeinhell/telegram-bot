@@ -11,8 +11,9 @@ namespace Telegram;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
-use Telegram\Config\BaseConfig;
+use Telegram\Entry\MessageEntry;
 use Telegram\Exceptions\TelegramCoreException;
+use Telegram\Types\Message;
 use Telegram\Types\User;
 
 /**
@@ -22,24 +23,20 @@ use Telegram\Types\User;
 class Bot
 {
     /**
-     * @var mixed
-     */
-    private $state;
-    /**
-     * @var BaseConfig
-     */
-    private $config;
-
-    /**
      * @var string
      */
     private $token;
 
     /**
+     * @var Client
+     */
+    private $client;
+
+    /**
      * Bot constructor.
      *
      * @param null|string $token
-     * @param array       $options
+     * @param array $options
      *
      * @throws TelegramCoreException
      */
@@ -59,7 +56,7 @@ class Bot
 
     /**
      * @param string $method
-     * @param array  $params
+     * @param array $params
      *
      * @return array
      */
@@ -67,7 +64,7 @@ class Bot
     {
         $response = $this->prepareResponse($this->client
             ->post($method, [
-                'form_data' => $params,
+                'form_params' => $params,
             ]));
 
         return $this->buildResponse(array_get($response, 'result', []));
@@ -81,8 +78,9 @@ class Bot
     private function prepareResponse(ResponseInterface $response)
     {
         $json = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
-        if (array_get($json, 'ok') == false) {
-            throw new TelegramCoreException(array_get($json, 'description', 'error') . array_get($json, 'error_code'), array_get($json, 'error_code'));
+        if (array_get($json, 'ok') === false) {
+            throw new TelegramCoreException(array_get($json, 'description', 'error') . array_get($json, 'error_code'),
+                array_get($json, 'error_code'));
         }
 
         return $json;
@@ -96,5 +94,37 @@ class Bot
     public function getMe()
     {
         return new User($this->call('getMe'));
+    }
+
+    /**
+     * @param MessageEntry $message
+     * @return Message
+     */
+    public function sendMessage(MessageEntry $message)
+    {
+        return new Message($this->call('sendMessage', $message->toArray()));
+    }
+
+    public function sendTextMessage($to, $text)
+    {
+        return $this->sendMessage(MessageEntry::create()
+            ->to($to)
+            ->text($text));
+    }
+
+    /**
+     * @return Client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param Client $client
+     */
+    public function setClient($client)
+    {
+        $this->client = $client;
     }
 }
