@@ -12,7 +12,6 @@ use Telegram\Base\BaseMethod;
 
 class Message extends BaseMethod
 {
-
     public function send()
     {
         return true;

@@ -9,7 +9,7 @@
 namespace Telegram\Base;
 
 
-use Telegram\Helpers\AnnotationHelper;
+use Illuminate\Support\Collection;
 
 /**
  * https://core.telegram.org/bots/api#available-types
@@ -19,61 +19,51 @@ use Telegram\Helpers\AnnotationHelper;
 class BaseType
 {
     /**
+     * @var Collection
+     */
+    protected $attributes;
+
+    /**
+     * @var array
+     */
+    protected $map = [];
+
+    /**
      * BaseType constructor.
-     * @param array $data
+     *
+     * @param $attributes
      */
-    public function __construct($data)
+    public function __construct($attributes)
     {
-        if (!is_array($data)) {
-            return $data;
-        }
-        foreach ($data as $key => $value) {
-            $key          = $this->toCamelCase($key);
-            $annotatinons = AnnotationHelper::getAnnotations($this, $key);
+        $this->attributes = $this->build($attributes);
+    }
 
-            if ($annotatinons && array_key_exists('var', $annotatinons)) {
-                $class = '\\Telegram\\Types\\' . $annotatinons['var'];
-                if (class_exists($class)) {
-                    /** @var BaseType $class */
-                    $this->$key = $class::create($value);
-                    continue;
+    /**
+     * @param array $attributes
+     *
+     * @return Collection
+     */
+    private function build(array $attributes = [])
+    {
+        $map = $this->map;
+
+        return collect($attributes)
+            ->mapWithKeys(function ($item, $key) use ($map) {
+                if (is_array($item) && $className = array_get($map, $key)) {
+                    return new $className($item);
                 }
-            }
 
-            if (property_exists($this, $key)) {
-                $this->$key = $value;
-                continue;
-            }
-        }
-    }
-
-    /**
-     * @param $key
-     * @return string
-     */
-    private function toCamelCase($key)
-    {
-        return lcfirst(implode(array_map(function ($part) {
-            return ucfirst($part);
-        }, explode('_', $key))));
-
-    }
-
-    /**
-     * @param $data
-     * @return static
-     */
-    public static function create($data)
-    {
-        return new static($data);
+                return $item;
+            });
     }
 
     /**
      * @param $json
+     *
      * @return static
      */
-    public static function createFromJson($json)
+    public static function create($json)
     {
-        return new static(json_decode($json, true));
+        return new static(is_array($json) ? $json : json_decode($json, true));
     }
 }

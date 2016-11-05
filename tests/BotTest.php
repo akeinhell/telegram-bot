@@ -49,7 +49,10 @@ class BotTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(get_class($botInfo), \Telegram\Types\User::class);
     }
 
-    public function testState()
+    /**
+     * @expectedException \Telegram\Exceptions\TelegramCoreException
+     */
+    public function testNotFound()
     {
         $bot = new \Telegram\Bot('101766553:AAFHtQFAMl0-bUtm5zun4CaHTu71Ymy1R50');
         $bot->getState();

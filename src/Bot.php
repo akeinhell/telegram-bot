@@ -10,10 +10,9 @@ namespace Telegram;
 
 
 use GuzzleHttp\Client;
-use Telegram\Actions\Message;
+use Psr\Http\Message\ResponseInterface;
 use Telegram\Config\BaseConfig;
 use Telegram\Exceptions\TelegramCoreException;
-use Telegram\Methods\GetMe;
 use Telegram\Types\User;
 
 /**
@@ -33,8 +32,10 @@ class Bot
 
     /**
      * Bot constructor.
+     *
      * @param null|string $token
      * @param array       $options
+     *
      * @throws TelegramCoreException
      */
     public function __construct($token = null, $options = [])
@@ -44,44 +45,51 @@ class Bot
             throw new TelegramCoreException('Token must be defined');
         }
         $baseOptions  = [
-            'base_uri' => sprintf('https://api.telegram.org/bot%s/', $token),
+            'base_uri'    => sprintf('https://api.telegram.org/bot%s/', $token),
+            'verify'      => false,
+            'http_errors' => false,
         ];
         $this->client = new Client(array_merge($baseOptions, $options));
     }
 
     /**
-     * @return mixed
+     * @param string $method
+     * @param array  $params
+     *
+     * @return array
      */
-    public function getState()
+    public function call($method, $params = [])
     {
-        return $this->state;
+        $response = $this->prepareResponse($this->client
+            ->post($method, [
+                'form_data' => $params,
+            ]));
+
+        return $this->buildResponse(array_get($response, 'result', []));
     }
 
-    public function message()
+    public function __call($name, $arguments)
     {
-        return new Message();
+        return $this->call($name, $arguments);
     }
 
-    /**
-     * @return User
-     */
+    private function prepareResponse(ResponseInterface $response)
+    {
+        $json = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
+        if (array_get($json, 'ok') == false) {
+            throw new TelegramCoreException(array_get($json, 'description', 'error') . array_get($json, 'error_code'), array_get($json, 'error_code'));
+        }
+
+        return $json;
+    }
+
+    private function buildResponse(array $response)
+    {
+        return $response;
+    }
+
     public function getMe()
     {
-        $method = new GetMe($this);
-
-        return $method();
-    }
-
-    public function send($method, $params = [])
-    {
-        $response = $this->client->post($method, ['body_params' => $params])->getBody()->__toString();
-        $data     = json_decode($response, true);
-
-        return new User($data['result']);
-    }
-
-    public function setConfig(BaseConfig $config)
-    {
-        $this->config = $config;
+        return new User($this->call('getMe'));
     }
 }
