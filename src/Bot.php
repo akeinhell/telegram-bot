@@ -31,6 +31,11 @@ class Bot
     private $config;
 
     /**
+     * @var string
+     */
+    private $token;
+
+    /**
      * Bot constructor.
      *
      * @param null|string $token
