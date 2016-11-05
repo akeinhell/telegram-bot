@@ -13,6 +13,11 @@ use Telegram\Base\BaseType;
 
 class Update extends BaseType
 {
+
+    protected $map = [
+        'message'       => Message::class,
+        'editedMessage' => Message::class,
+    ];
     /**
      * @var integer
      */

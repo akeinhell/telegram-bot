@@ -57,4 +57,32 @@ class BotTest extends PHPUnit_Framework_TestCase
         $bot = new \Telegram\Bot('101766553:AAFHtQFAMl0-bUtm5zun4CaHTu71Ymy1R50');
         $bot->getState();
     }
+
+    public function testUpdate(){
+        $this->assertTrue(is_callable([\Carbon\Carbon::class, 'createFromTimestamp']));
+        $update = Update::create([
+            'update_id' => 123456,
+            'message' => [
+                'message_id' => 13948,
+                'from' => [
+                    'id' => 123,
+                    'first_name' => 'Ilya',
+                    'last_name' => 'Gusev',
+                    'username' => 'iGusev',
+                ],
+                'chat' => [
+                    'id' => 123,
+                    'type' => 'private',
+                    'first_name' => 'Ilya',
+                    'last_name' => 'Gusev',
+                    'username' => 'iGusev',
+                ],
+                'date' => 1440169809,
+                'text' => 'testText',
+            ],
+        ]);
+
+        $this->assertNotNull($update->get('message'));
+        dump($update->toArray());
+    }
 }
