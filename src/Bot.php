@@ -12,6 +12,7 @@ namespace Telegram;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 use Telegram\Config\BaseConfig;
+use Telegram\Entry\MessageEntry;
 use Telegram\Exceptions\TelegramCoreException;
 use Telegram\Types\User;
 
@@ -22,13 +23,9 @@ use Telegram\Types\User;
 class Bot
 {
     /**
-     * @var mixed
+     * @var Bot
      */
-    private $state;
-    /**
-     * @var BaseConfig
-     */
-    private $config;
+    private static $instance;
 
     /**
      * @var string
@@ -96,5 +93,22 @@ class Bot
     public function getMe()
     {
         return new User($this->call('getMe'));
+    }
+
+    /**
+     * @param $message
+     *
+     * @return array
+     */
+    public function sendMessage(MessageEntry $message)
+    {
+        return $this->call('sendMessage', $message->toArray());
+    }
+
+    public function sendTextMessage($to, $text)
+    {
+        return $this->sendMessage(MessageEntry::create()
+            ->to($to)
+            ->text($text));
     }
 }
