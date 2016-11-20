@@ -9,6 +9,8 @@
 namespace Telegram\Base;
 
 
+use Illuminate\Support\Collection;
+
 class BaseEntry
 {
     protected $attributes;
@@ -21,20 +23,33 @@ class BaseEntry
         $this->attributes = collect();
     }
 
-    protected function set($key, $value)
+    protected function set($key, $value): BaseEntry
     {
         $this->attributes->put($key, $value);
 
         return $this;
     }
 
-    protected function get($key, $default = null)
+    public function get($key, $default = null)
     {
         return $this->attributes->get($key, $default);
     }
 
     public function toArray()
     {
-        return $this->attributes->toArray();
+        return $this->attributes
+            ->mapWithKeys(function ($item, $key) {
+                return $item instanceof Collection || get_parent_class($item) === BaseEntry::class?
+                    [$key => $item->toArray()] :
+                    [$key => $item];
+            })
+            ->toArray();
     }
+
+
+    public static function create()
+    {
+        return new static();
+    }
+
 }

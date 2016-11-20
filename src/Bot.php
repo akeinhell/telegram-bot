@@ -14,6 +14,7 @@ use Psr\Http\Message\ResponseInterface;
 use Telegram\Config\BaseConfig;
 use Telegram\Entry\MessageEntry;
 use Telegram\Exceptions\TelegramCoreException;
+use Telegram\Types\Message;
 use Telegram\Types\User;
 
 /**
@@ -36,7 +37,7 @@ class Bot
      * Bot constructor.
      *
      * @param null|string $token
-     * @param array       $options
+     * @param array $options
      *
      * @throws TelegramCoreException
      */
@@ -56,7 +57,7 @@ class Bot
 
     /**
      * @param string $method
-     * @param array  $params
+     * @param array $params
      *
      * @return array
      */
@@ -64,7 +65,7 @@ class Bot
     {
         $response = $this->prepareResponse($this->client
             ->post($method, [
-                'form_data' => $params,
+                'form_params' => $params,
             ]));
 
         return $this->buildResponse(array_get($response, 'result', []));
@@ -79,7 +80,8 @@ class Bot
     {
         $json = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
         if (array_get($json, 'ok') == false) {
-            throw new TelegramCoreException(array_get($json, 'description', 'error') . array_get($json, 'error_code'), array_get($json, 'error_code'));
+            throw new TelegramCoreException(array_get($json, 'description', 'error') . array_get($json, 'error_code'),
+                array_get($json, 'error_code'));
         }
 
         return $json;
@@ -96,13 +98,12 @@ class Bot
     }
 
     /**
-     * @param $message
-     *
-     * @return array
+     * @param MessageEntry $message
+     * @return Message
      */
-    public function sendMessage(MessageEntry $message)
+    public function sendMessage(MessageEntry $message): Message
     {
-        return $this->call('sendMessage', $message->toArray());
+        return new Message($this->call('sendMessage', $message->toArray()));
     }
 
     public function sendTextMessage($to, $text)
@@ -110,5 +111,20 @@ class Bot
         return $this->sendMessage(MessageEntry::create()
             ->to($to)
             ->text($text));
+    }
+
+    public function testCall()
+    {
+        $replyMarkup = [
+            'keyboard' => [
+                ["A", "B"],
+            ],
+        ];
+
+        return $this->call('sendMessage', [
+            'chat_id'      => \MessagesTest::CHAT_ID,
+            'text'         => 'test',
+            'reply_markup' => json_encode($replyMarkup),
+        ]);
     }
 }

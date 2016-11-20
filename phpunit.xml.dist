@@ -10,8 +10,7 @@
          processIsolation="false"
          stopOnError="false"
          stopOnFailure="false"
-         verbose="true"
->
+         verbose="true">
     <testsuites>
         <testsuite name="Telegram Bot PHP Test Suite">
             <directory suffix="Test.php">./tests</directory>
@@ -23,7 +22,6 @@
              lowUpperBound="50" highLowerBound="80"/>
         <log type="coverage-clover" target="./tests/coverage/coverage.xml"/>
         <log type="coverage-json" target="./tests/coverage/coverage.json"/>
-
     </logging>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">

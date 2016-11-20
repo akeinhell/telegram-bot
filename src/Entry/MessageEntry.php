@@ -11,30 +11,39 @@ namespace Telegram\Entry;
 
 use Telegram\Base\BaseEntry;
 
+/**
+ * Class MessageEntry
+ * @package Telegram\Entry
+ */
 class MessageEntry extends BaseEntry
 {
-    public static function create()
-    {
-        return new static();
-    }
-
     /**
      * @param int $chatId
-     *
-     * @return $this
+     * @return MessageEntry
      */
-    public function to($chatId)
+    public function to($chatId): MessageEntry
     {
-        return $this->set('to', $chatId);
+        return $this->set('chat_id', $chatId);
     }
 
-    public function withInlineKeyboard(InlineKeyboard $keyboard)
+    public function withInlineKeyboard(InlineKeyboard $keyboard): MessageEntry
     {
         return $this->set('inline_keyboard', $keyboard->toArray());
     }
 
-    public function text($text){
+    public function text($text): MessageEntry
+    {
         return $this->set('text', $text);
+    }
+
+    public function withReplyKeyboard(ReplyKeyboardEntry $keyboard)
+    {
+        return $this->set('reply_markup', $keyboard);
+    }
+
+    public function hideReplyKeyboard()
+    {
+        return $this->set('reply_markup', json_encode(['hide_keyboard' => true]));
     }
 
 }
