@@ -28,7 +28,7 @@ class ArrayOfBaseType
     {
         $baseType    = $this->baseType;
         $this->array = collect($array)
-            ->map(function ($item) use ($baseType) {
+            ->map(function($item) use ($baseType) {
                 return new BaseType($item);
             });
     }

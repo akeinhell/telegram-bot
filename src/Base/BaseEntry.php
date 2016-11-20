@@ -38,10 +38,9 @@ class BaseEntry
     public function toArray()
     {
         return $this->attributes
-            ->mapWithKeys(function ($item, $key) {
-                return $item instanceof Collection || get_parent_class($item) === BaseEntry::class?
-                    [$key => $item->toArray()] :
-                    [$key => $item];
+            ->mapWithKeys(function($item, $key) {
+                return $item instanceof Collection || get_parent_class($item) === BaseEntry::class ?
+                    [$key => $item->toArray()] : [$key => $item];
             })
             ->toArray();
     }

@@ -73,6 +73,9 @@ class BaseType
         return new static(is_array($json) ? $json : json_decode($json, true));
     }
 
+    /**
+     * @param string $key
+     */
     public function get($key)
     {
         return $this->attributes->get($key);
