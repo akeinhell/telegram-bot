@@ -9,7 +9,7 @@
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/akeinhell/telegram-bot.svg?style=flat-square)](https://scrutinizer-ci.com/g/akeinhell/telegram-bot/code-structure)
 [![Quality Score](https://img.shields.io/scrutinizer/g/telegrambot/api.svg?style=flat-square)](https://scrutinizer-ci.com/g/akeinhell/telegram-bot)
 [![Total Downloads](https://img.shields.io/packagist/dt/akeinhell/telegram-bot.svg?style=flat-square)](https://packagist.org/packages/akeinhell/telegram-bot)
-
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/5dba33e1-c7a1-4f28-949f-a00332326363/small.png)](https://insight.sensiolabs.com/projects/5dba33e1-c7a1-4f28-949f-a00332326363)
 
 Библиотека предоставляет полный доступ к [Telegram Bot API](https://core.telegram.org/bots/api). Реализованы все доступные методы и все возможные варианты ответов 
 
@@ -38,7 +38,7 @@ composer require akeinhell/telegram-bot
 
 ``` bash
 $ composer test
-```
+```1
 
 ## Contributing
 
