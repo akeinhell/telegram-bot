@@ -39,7 +39,7 @@ class InlineKeyboard
         return $keyboard;
     }
 
-    public function toArray(){
+    public function toArray() {
         return $this->rows->toArray();
     }
 }

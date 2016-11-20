@@ -46,7 +46,7 @@ class Bot
         if (!$this->token) {
             throw new TelegramCoreException('Token must be defined');
         }
-        $baseOptions  = [
+        $baseOptions = [
             'base_uri'    => sprintf('https://api.telegram.org/bot%s/', $token),
             'verify'      => false,
             'http_errors' => false,
@@ -79,7 +79,7 @@ class Bot
     {
         $json = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
         if (array_get($json, 'ok') == false) {
-            throw new TelegramCoreException(array_get($json, 'description', 'error') . array_get($json, 'error_code'),
+            throw new TelegramCoreException(array_get($json, 'description', 'error').array_get($json, 'error_code'),
                 array_get($json, 'error_code'));
         }
 
