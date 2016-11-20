@@ -112,19 +112,4 @@ class Bot
             ->to($to)
             ->text($text));
     }
-
-    public function testCall()
-    {
-        $replyMarkup = [
-            'keyboard' => [
-                ["A", "B"],
-            ],
-        ];
-
-        return $this->call('sendMessage', [
-            'chat_id'      => \MessagesTest::CHAT_ID,
-            'text'         => 'test',
-            'reply_markup' => json_encode($replyMarkup),
-        ]);
-    }
 }

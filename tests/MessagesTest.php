@@ -57,5 +57,8 @@ class MessagesTest extends PHPUnit_Framework_TestCase
 
         $message->hideReplyKeyboard();
         $this->bot->sendMessage($message);
+
+        $this->bot->sendTextMessage(self::CHAT_ID, $this->faker->text);
     }
+
 }
