@@ -81,6 +81,7 @@ class ReplyKeyboardEntry extends BaseEntry
                     return [
                         $key => collect($item)
                             ->mapWithKeys(function ($item, $key) {
+                                /** @var $item Collection */
                                 return [$key => $item->toArray()];
                             }),
                     ];
@@ -94,7 +95,6 @@ class ReplyKeyboardEntry extends BaseEntry
         }
 
         return json_encode(parent::toArray());
-//        return parent::toArray();
     }
 
 

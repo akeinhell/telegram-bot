@@ -2,11 +2,9 @@
 
 
 use Telegram\Bot;
-use Telegram\Entry\KeyboardButton;
 use Telegram\Entry\KeyboardButtonEntry;
 use Telegram\Entry\MessageEntry;
 use Telegram\Entry\ReplyKeyboardEntry;
-use Telegram\Types\Message;
 
 class MessagesTest extends PHPUnit_Framework_TestCase
 {

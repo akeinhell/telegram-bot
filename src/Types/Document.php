@@ -13,27 +13,5 @@ use Telegram\Base\BaseType;
 
 class Document extends BaseType
 {
-    /**
-     * @var string
-     */
-    protected $fileId;
 
-    /**
-     * @var ProtoSize
-     */
-    protected $thumb;
-
-    /**
-     * @var string
-     */
-    protected $fileName;
-    /**
-     * @var string
-     */
-    protected $mimeType;
-
-    /**
-     * @var int
-     */
-    protected $fileSize;
 }

@@ -17,7 +17,7 @@ class KeyboardButtonEntry extends BaseEntry
      * @param $text
      * @param bool $requestContact
      * @param bool $requestLocation
-     * @return static
+     * @return KeyboardButtonEntry
      */
     public static function create($text = '', $requestContact = false, $requestLocation = false)
     {
@@ -27,6 +27,10 @@ class KeyboardButtonEntry extends BaseEntry
             ->setRequestLocation($requestLocation);
     }
 
+    /**
+     * @param $text
+     * @return $this
+     */
     public function setText($text)
     {
         return $this->set('text', $text);
@@ -34,13 +38,17 @@ class KeyboardButtonEntry extends BaseEntry
 
     /**
      * @param bool $requestContact
-     * @return BaseEntry
+     * @return $this
      */
     public function setRequestContact(bool $requestContact)
     {
         return $this->set('request_contact', $requestContact);
     }
 
+    /**
+     * @param bool $requestLocation
+     * @return $this
+     */
     public function setRequestLocation(bool $requestLocation){
         return $this->set('request_contact', $requestLocation);
     }

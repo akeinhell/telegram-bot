@@ -111,12 +111,4 @@ class BaseType
         }
         throw new \InvalidArgumentException();
     }
-
-//    public function __debugInfo()
-//    {
-//        return [
-//            'map'  => $this->map,
-//            'data' => $this->toArray(),
-//        ];
-//    }
 }

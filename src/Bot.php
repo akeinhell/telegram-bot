@@ -11,7 +11,6 @@ namespace Telegram;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
-use Telegram\Config\BaseConfig;
 use Telegram\Entry\MessageEntry;
 use Telegram\Exceptions\TelegramCoreException;
 use Telegram\Types\Message;
@@ -24,14 +23,14 @@ use Telegram\Types\User;
 class Bot
 {
     /**
-     * @var Bot
-     */
-    private static $instance;
-
-    /**
      * @var string
      */
     private $token;
+
+    /**
+     * @var Client
+     */
+    private $client;
 
     /**
      * Bot constructor.
