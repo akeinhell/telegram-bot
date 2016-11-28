@@ -36,5 +36,6 @@
     "preferred-install": "dist"
   },
   "minimum-stability": "stable",
+  "license":"MIT",
   "prefer-stable"    : true
 }
