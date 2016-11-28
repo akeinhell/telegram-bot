@@ -78,7 +78,7 @@ class Bot
     private function prepareResponse(ResponseInterface $response)
     {
         $json = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
-        if (array_get($json, 'ok') == false) {
+        if (array_get($json, 'ok') === false) {
             throw new TelegramCoreException(array_get($json, 'description', 'error') . array_get($json, 'error_code'),
                 array_get($json, 'error_code'));
         }
@@ -110,5 +110,21 @@ class Bot
         return $this->sendMessage(MessageEntry::create()
             ->to($to)
             ->text($text));
+    }
+
+    /**
+     * @return Client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param Client $client
+     */
+    public function setClient($client)
+    {
+        $this->client = $client;
     }
 }
