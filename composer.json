@@ -1,37 +1,40 @@
 {
-  "name": "akeinhell/telegram-bot",
-  "authors": [
+  "name"             : "akeinhell/telegram-bot",
+  "description"      : "[IN DEVELOP] A complete Telegram bot API implementation written in PHP, with support for inline bots!",
+  "authors"          : [
     {
-      "name": "Aleksey Dorokhov",
+      "name" : "Aleksey Dorokhov",
       "email": "akeinhell@gmail.com"
     }
   ],
-  "require": {
-    "php"                      : ">=7.0",
-    "guzzlehttp/guzzle"        : "^6.2",
-    "rappasoft/laravel-helpers": "dev-master",
+  "require"          : {
+    "php"              : ">=5.5",
+    "guzzlehttp/guzzle": "^6.2",
     "tightenco/collect": "^5.3",
-    "nesbot/carbon": "^1.21"
+    "nesbot/carbon"    : "^1.21"
   },
-  "require-dev": {
-    "phpunit/phpunit": "^4.8|^5.0",
+  "require-dev"      : {
+    "phpunit/phpunit"   : "^4.8|^5.0",
     "symfony/var-dumper": "^3.1",
-    "phpspec/prophecy": "^1.5",
-    "fzaninotto/faker": "^1.6"
+    "phpspec/prophecy"  : "^1.5",
+    "fzaninotto/faker"  : "^1.6"
   },
-  "autoload": {
+  "autoload"         : {
     "psr-4": {
       "Telegram\\": "src/"
-    }
+    },
+    "files": [
+      "src/helpers.php"
+    ]
   },
-  "autoload-dev": {
+  "autoload-dev"     : {
     "psr-4": {
       "Telegram\\Tests\\": "tests/"
     }
   },
-  "config": {
+  "config"           : {
     "preferred-install": "dist"
   },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+  "minimum-stability": "stable",
+  "prefer-stable"    : true
 }
