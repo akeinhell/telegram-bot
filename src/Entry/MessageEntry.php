@@ -21,17 +21,17 @@ class MessageEntry extends BaseEntry
      * @param int $chatId
      * @return MessageEntry
      */
-    public function to($chatId): MessageEntry
+    public function to($chatId)
     {
         return $this->set('chat_id', $chatId);
     }
 
-    public function withInlineKeyboard(InlineKeyboard $keyboard): MessageEntry
+    public function withInlineKeyboard(InlineKeyboard $keyboard)
     {
         return $this->set('inline_keyboard', $keyboard->toArray());
     }
 
-    public function text($text): MessageEntry
+    public function text($text)
     {
         return $this->set('text', $text);
     }

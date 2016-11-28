@@ -100,7 +100,7 @@ class Bot
      * @param MessageEntry $message
      * @return Message
      */
-    public function sendMessage(MessageEntry $message): Message
+    public function sendMessage(MessageEntry $message)
     {
         return new Message($this->call('sendMessage', $message->toArray()));
     }

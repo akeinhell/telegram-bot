@@ -40,7 +40,7 @@ class KeyboardButtonEntry extends BaseEntry
      * @param bool $requestContact
      * @return $this
      */
-    public function setRequestContact(bool $requestContact)
+    public function setRequestContact($requestContact)
     {
         return $this->set('request_contact', $requestContact);
     }
@@ -49,7 +49,7 @@ class KeyboardButtonEntry extends BaseEntry
      * @param bool $requestLocation
      * @return $this
      */
-    public function setRequestLocation(bool $requestLocation){
+    public function setRequestLocation($requestLocation){
         return $this->set('request_contact', $requestLocation);
     }
 }

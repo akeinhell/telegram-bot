@@ -47,7 +47,7 @@ class ReplyKeyboardEntry extends BaseEntry
      * @param bool $resize
      * @return $this
      */
-    public function setResizeKeyboard(bool $resize)
+    public function setResizeKeyboard($resize)
     {
         return $this->set('resize_keyboard', $resize);
     }
@@ -56,7 +56,7 @@ class ReplyKeyboardEntry extends BaseEntry
      * @param bool $oneTime
      * @return $this
      */
-    public function setOneTimeKeyboard(bool $oneTime)
+    public function setOneTimeKeyboard($oneTime)
     {
         return $this->set('one_time_keyboard', $oneTime);
     }
@@ -65,7 +65,7 @@ class ReplyKeyboardEntry extends BaseEntry
      * @param bool $selective
      * @return $this
      */
-    public function setSelective(bool $selective)
+    public function setSelective($selective)
     {
         return $this->set('selective', $selective);
     }

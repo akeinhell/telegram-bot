@@ -23,7 +23,7 @@ class BaseEntry
         $this->attributes = collect();
     }
 
-    protected function set($key, $value): BaseEntry
+    protected function set($key, $value)
     {
         $this->attributes->put($key, $value);
 
