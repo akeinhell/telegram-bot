@@ -29,3 +29,13 @@ if ( ! function_exists('array_get'))
         return $array;
     }
 }
+
+
+if ( ! function_exists('snake_case'))
+{
+        function snake_case($value, $delimiter = '_')
+        {
+        	$replace = '$1'.$delimiter.'$2';
+        	return ctype_lower($value) ? $value : strtolower(preg_replace('/(.)([A-Z])/', $replace, $value));
+        }
+}
