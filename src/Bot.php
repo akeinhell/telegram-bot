@@ -1,130 +1,71 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: akeinhell
- * Date: 22.06.16
- * Time: 12:03
- */
+
 
 namespace Telegram;
 
-
-use GuzzleHttp\Client;
-use Psr\Http\Message\ResponseInterface;
-use Telegram\Entry\MessageEntry;
-use Telegram\Exceptions\TelegramCoreException;
-use Telegram\Types\Message;
-use Telegram\Types\User;
+use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\MessageFormatter;
+use GuzzleHttp\Middleware;
+use Illuminate\Container\Container;
+use Monolog\Logger;
+use Telegram\Models\Chat;
 
 /**
  * Class Bot
+ * @property-read \Telegram\Api api
+ *
  * @package Telegram
  */
 class Bot
 {
-    /**
-     * @var string
-     */
-    private $token;
+    protected static $instance;
+    private          $container;
 
-    /**
-     * @var Client
-     */
-    private $client;
-
-    /**
-     * Bot constructor.
-     *
-     * @param null|string $token
-     * @param array $options
-     *
-     * @throws TelegramCoreException
-     */
-    public function __construct($token = null, $options = [])
+    public function __construct($providers = null, $inflectors = null, $definitionFactory = null)
     {
-        $this->token = $token ?: getenv('TELEGRAM_TOKEN');
-        if (!$this->token) {
-            throw new TelegramCoreException('Token must be defined');
-        }
-        $baseOptions  = [
-            'base_uri'    => sprintf('https://api.telegram.org/bot%s/', $token),
-            'verify'      => false,
-            'http_errors' => false,
-        ];
-        $this->client = new Client(array_merge($baseOptions, $options));
+        $this->container = Container::getInstance();
+        $this->boot();
     }
 
-    /**
-     * @param string $method
-     * @param array $params
-     *
-     * @return array
-     */
-    public function call($method, $params = [])
+    public static function create(string $token)
     {
-        $response = $this->prepareResponse($this->client
-            ->post($method, [
-                'form_params' => $params,
-            ]));
-
-        return $this->buildResponse(array_get($response, 'result', []));
-    }
-
-    public function __call($name, $arguments)
-    {
-        return $this->call($name, $arguments);
-    }
-
-    private function prepareResponse(ResponseInterface $response)
-    {
-        $json = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
-        if (array_get($json, 'ok') === false) {
-            throw new TelegramCoreException(array_get($json, 'description', 'error') . array_get($json, 'error_code'),
-                array_get($json, 'error_code'));
+        if (is_null(self::$instance)) {
+            self::$instance = new static();
         }
 
-        return $json;
+        return new static();
     }
 
-    private function buildResponse(array $response)
+    private function boot()
     {
-        return $response;
+        $this->container->bind('api', Api::class);
+        $this->container->bind(Logger::class, function () {
+            return new Logger('bot');
+        });
+        $this->container->bind(GuzzleClient::class, function (Container $container) {
+            $stack = HandlerStack::create();
+
+            $logger    = $container->make(Logger::class);
+            $formatter = new MessageFormatter('[{code}] {method} {uri}');
+            $stack->push(Middleware::log($logger, $formatter));
+
+            $token = '148482624:AAF54IVU0zSvvccB2YEQyU1_sH220rLX1oY';
+
+            return new GuzzleClient(
+                [
+                    'base_uri' => 'https://api.telegram.org/bot' . $token . '/',
+                    'handler'  => $stack,
+                ]
+            );
+        });
     }
 
     public function getMe()
     {
-        return new User($this->call('getMe'));
-    }
+        /** @var Api $api */
+        $api = $this->container->get('api');
 
-    /**
-     * @param MessageEntry $message
-     * @return Message
-     */
-    public function sendMessage(MessageEntry $message)
-    {
-        return new Message($this->call('sendMessage', $message->toArray()));
-    }
-
-    public function sendTextMessage($to, $text)
-    {
-        return $this->sendMessage(MessageEntry::create()
-            ->to($to)
-            ->text($text));
-    }
-
-    /**
-     * @return Client
-     */
-    public function getClient()
-    {
-        return $this->client;
-    }
-
-    /**
-     * @param Client $client
-     */
-    public function setClient($client)
-    {
-        $this->client = $client;
+        return new Chat($api->call('getChat', ['chat_id' => '94986676']));
     }
 }
